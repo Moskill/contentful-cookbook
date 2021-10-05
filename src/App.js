@@ -1,30 +1,43 @@
-import React, {useState} from 'react';
-import './App.css';
+import React, {useState, useEffect} from 'react';
 import {client} from './client';
+import {Route, Switch, NavLink} from 'react-router-dom';
+import Recipes from './pages/Recipes';
+import './App.css';
 
 function App() {
 
-  const [articles, setArticles] = useState();
+  const [recipes, setRecipes] = useState([]);
 
-  client.getEntries()
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+  useEffect(() => {
+    client.getEntries()
+      .then(res => setRecipes(res.items))
+      .catch(err => console.log(err))
+  },[])
 
+  
   return (
-    <>
-      <div className="container">
-        <header>
-          <div className="wrapper">
-            <span>React and Contentful</span>
-          </div>
-        </header>
-        <main>
-          <div className="wrapper">
-            
-          </div>
-        </main>
-      </div>
-    </>
+    <div>
+      <nav className="main-nav">
+        <ul>
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/recipes" >All Recipes</NavLink>
+          </li>
+          <li>
+            <NavLink to="/about">About Us</NavLink>
+          </li>
+        </ul>
+      </nav>
+      <Switch>
+        <Route exact path="/recipes" component={Recipes}>
+          <Recipes props={recipes}/>
+        </Route>
+        <Route path="/about"></Route>
+        <Route path="/"></Route>
+      </Switch>
+    </div>
   );
 }
 
