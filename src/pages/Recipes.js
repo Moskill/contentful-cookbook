@@ -12,9 +12,9 @@ function Recipes({props}) {
             <img src={'https:' + item.fields.image.fields.file.url.substr(2)}/>
           </div>
           <div className="recipe-title">
-            <div className="title-overlay">{item.fields.name}</div>
+            <div className="title-overlay">{item.fields.name}
+            <button className="view-recipe">View</button></div>
           </div>
-          {/* <button className="view-recipe">View</button> */}
         </div>
       </>
     })}

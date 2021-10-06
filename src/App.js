@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {client} from './client';
 import {Route, Switch, NavLink} from 'react-router-dom';
 import Recipes from './pages/Recipes';
+import Recipe from './pages/Recipe';
 import './App.css';
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
       <Switch>
         <Route exact path="/recipes" component={Recipes}>
           <Recipes props={recipes}/>
+        </Route>
+        <Route exact path="/recipe" component={Recipe}>
+          <Recipe props={recipes}/>
         </Route>
         <Route path="/about"></Route>
         <Route path="/"></Route>
