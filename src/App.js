@@ -35,7 +35,7 @@ function App() {
         <Route exact path="/recipes" component={Recipes}>
           <Recipes props={recipes}/>
         </Route>
-        <Route exact path="/recipe" component={Recipe}>
+        <Route exact path="/recipe/:recipe" component={Recipe}>
           <Recipe props={recipes}/>
         </Route>
         <Route path="/about"></Route>
