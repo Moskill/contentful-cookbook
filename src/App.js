@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {client} from './client';
-import {Route, Switch, NavLink} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { FaBookDead } from 'react-icons/fa';
+import { client } from './client';
+import { Route, Switch, NavLink } from 'react-router-dom';
 import Recipes from './pages/Recipes';
 import Recipe from './pages/Recipe';
 import './App.css';
@@ -19,6 +20,11 @@ function App() {
   return (
     <div>
       <nav className="main-nav">
+        <div className="logo-box">
+          <FaBookDead className="logo-icon" />
+          <span className="logo-text-1">Sau </span>
+          <span className="logo-text-2">Lekker</span>
+        </div>
         <ul>
           <li>
             <NavLink to="/">Home</NavLink>
@@ -35,7 +41,7 @@ function App() {
         <Route exact path="/recipes" component={Recipes}>
           <Recipes props={recipes}/>
         </Route>
-        <Route exact path="/recipe" component={Recipe}>
+        <Route exact path="/recipe/:recipe" component={Recipe}>
           <Recipe props={recipes}/>
         </Route>
         <Route path="/about"></Route>

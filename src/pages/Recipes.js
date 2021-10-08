@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 function Recipes({props}) {
   console.log(props);
@@ -13,7 +14,10 @@ function Recipes({props}) {
           </div>
           <div className="recipe-title">
             <div className="title-overlay">{item.fields.name}
-            <button className="view-recipe">View</button></div>
+            <Link to={`/recipe/${item.fields.name}`}>
+              <button className="view-recipe">View</button>
+            </Link>
+            </div>
           </div>
         </div>
       </>
