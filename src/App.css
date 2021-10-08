@@ -11,7 +11,8 @@ body {
   background-color: #2b2b2b;
 }
 .main-nav a {
-  color: white;
+  font-family: 'Nosifer';
+  color: red;
   text-decoration: none;
 }
 
@@ -92,3 +93,4 @@ body {
   cursor: pointer;
   background-color: rgb(180, 31, 81);
 }
+
