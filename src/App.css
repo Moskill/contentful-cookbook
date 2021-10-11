@@ -140,6 +140,12 @@ body {
   margin-top: 0;
 }
 
+@media only screen and (max-width: 640px) {
+  .recipe-detail-container h1 {
+    font-size: 20px;
+  }
+}
+
 .recipe-detail-image {
   display: flex;
   justify-content: center;
@@ -148,6 +154,12 @@ body {
 .recipe-detail-image img {
   width: auto;
   margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 800px) {
+  .recipe-detail-image img {
+    width: 350px;;
+  }
 }
 
 .deko-line {
@@ -251,4 +263,82 @@ body {
   font-weight: 300;
   font-size: 12px;
   display: block;
+}
+
+.recipe-detail-footer {
+  padding-top: 4px;
+  align-items: flex-start;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  border-top: 2px solid rgb(202, 33, 90);
+  margin-top: 1rem;
+  margin-bottom: 0px;
+  width: 100%;
+  background: linear-gradient(#000, #2b2b2b);
+  height: 6rem;
+}
+
+.footer-element p {
+  color: #e6e6e6;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 3px 0px 0px 16px;
+  padding: 0px;
+}
+
+.footer-element p:hover {
+  color:rgb(180, 31, 81);
+}
+
+
+.footer-element-label {
+  padding-left: 4px;
+  border-left: 12px ridge rgb(202, 33, 90);
+  padding-right: 10px;
+  border-bottom: 1px dashed rgb(202, 33, 90);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.social-icons {
+  padding-top: 6px;
+}
+
+.social-icon {
+  padding: 0px 2px;
+  color: #e6e6e6;
+}
+
+.icon-facebook:hover {
+  color: #3b5998;
+  cursor: pointer;
+}
+
+.icon-twitter:hover {
+  color: #00acee;
+  cursor: pointer;
+}
+
+.icon-pinterest:hover {
+  color: #c8232c;
+  cursor: pointer;
+}
+
+.icon-linkedin:hover {
+  color: #0e76a8;
+  cursor: pointer;
+}
+
+.icon-youtube:hover {
+  color: #c4302b;
+  cursor: pointer;
+}
+
+.icon-tiktok:hover {
+  background-image: linear-gradient(180deg, #010101, #69C9D0, #FFFFFF, #EE1D52);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
 }
