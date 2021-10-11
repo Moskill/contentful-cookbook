@@ -7,9 +7,7 @@ function Home(props) {
 
   return (
     <>
-      <div className="main">Welcome to our amazing cookbook!
-        <button onClick={() => {history.push('./spaghetti')}}>Yummy Spaghetti</button>
-      </div>
+      <br/><br/><br/><p>Hello World</p>
     </>
   )
 }

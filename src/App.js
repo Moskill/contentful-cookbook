@@ -4,6 +4,7 @@ import { client } from './client';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import Recipes from './pages/Recipes';
 import Recipe from './pages/Recipe';
+import Home from './pages/Home';
 import './App.css';
 
 function App() {
@@ -45,7 +46,9 @@ function App() {
           <Recipe props={recipes}/>
         </Route>
         <Route path="/about"></Route>
-        <Route path="/"></Route>
+        <Route exact path="/" component={Home}>
+          <Home/>
+        </Route>
       </Switch>
     </div>
   );
