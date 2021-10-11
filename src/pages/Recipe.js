@@ -1,5 +1,6 @@
 import React from 'react'
 import {useParams} from 'react-router-dom';
+import Footer from './Footer';
 import '../App.css';
 
 
@@ -36,8 +37,8 @@ function Recipe({props}) {
               </div>
             </div>
           </div>
-          <div className="recipe-detail-footer"></div>
         </div>
+          <Footer/>
       </div>
       {/* <p>Hello {recipe}</p> */}
     </>
