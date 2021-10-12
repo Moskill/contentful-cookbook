@@ -8,7 +8,7 @@ function Recipes({props}) {
     <>
       <div className="recipe-container">
     {props.map((item) => {
-      return <>
+      return <>   
         <div className="recipe-wrapper">
           <div className="recipe-image">
             <img src={'https:' + item.fields.image.fields.file.url.substr(2)}/>
