@@ -46,8 +46,9 @@ function App() {
 				<Route exact path="/recipe/:recipe" component={Recipe}>
 					<Recipe props={recipes} />
 				</Route>
-				{/* <Route exact path="/about" component={About}></Route> */}
-	     		<Route path="/about"></Route>
+	     		<Route path="/about" component={About} > 
+				 <About /> 
+				 </Route>
 				<Route exact path="/" component={Home}>
 					<Home />
 				</Route>
