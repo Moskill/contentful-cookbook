@@ -10,13 +10,13 @@ body {
 	display: flex;
 	text-transform: uppercase;
 	padding-left: 10%;
-	font-family: "Nosifer";
+	font-family: "Oswald";
 	width: 90%;
 	height: 3.5rem;
 	background: linear-gradient(#2b2b2b, #434343);
 	box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.7);
 	border-bottom: 1px solid rgb(202, 33, 90);
-	border-top: 1px solid rgb(230, 0, 0);
+	border-top: 1px solid rgb(202, 33, 90);
 }
 .main-nav a {
 	padding-top: 5px;
@@ -35,7 +35,7 @@ body {
 
 .main-nav a:hover {
 	text-shadow: none;
-	color: rgb(230, 0, 0);
+	color: rgb(202, 33, 90);
 	border-bottom: 3px solid rgb(202, 33, 90);
 }
 
@@ -66,8 +66,6 @@ body {
 	margin-left: 22%;
 	margin-right: 22%;
 	padding-top: 4rem;
-	background-image: url("images/Recipes.jpg");
-	background-size: cover;
 }
 
 .recipe-title {
@@ -91,7 +89,7 @@ body {
 	padding-top: 0.355rem;
 	padding-left: 5px;
 	padding-bottom: 5px;
-	border-top: 3px solid rgb(230, 0, 0);
+	border-top: 3px solid rgb(202, 33, 90);
 }
 
 .recipe-image img {
@@ -105,6 +103,7 @@ body {
 	display: block;
 	margin-top: 1rem;
 	margin-right: 5px;
+	border: 1px solid #5b5b5b;
 }
 
 .view-recipe {
@@ -124,8 +123,6 @@ body {
 
 .detail-wrapper {
 	padding-top: 5rem;
-	background-image: url("images/Recipe.jpg");
-	background-size: cover;
 }
 
 .recipe-detail-container {
@@ -190,7 +187,7 @@ body {
 }
 
 .logo-text-2 {
-	color: rgb(230, 0, 0);
+	color: rgb(180, 31, 81);
 	display: block;
 	display: flex;
 	margin-top: -10px;
@@ -250,17 +247,17 @@ body {
 
 .recipe-detail-ingredients {
 	padding: 8px;
-	font-family: "Cormorant Upright";
+	font-family: "Raleway";
 	font-weight: 600;
-	color: rgb(230, 0, 0);
+	color: #3b3b3b;
 	flex: 2;
 	width: 35%;
 }
 
 .recipe-detail-steps {
-	font-family: "Cormorant Upright";
+	font-family: "Raleway";
 	font-weight: 600;
-	color: rgb(230, 0, 0);
+	color: #3b3b3b;
 	padding: 8px;
 	flex: 2;
 	width: 35%;
@@ -358,7 +355,7 @@ body {
 .home-container {
 	background-image: url("images/Home.jpg");
 	height: 100vh;
-	width: 100vw;
+	width: 99.3vw;
 }
 
 .home-container h1 {
