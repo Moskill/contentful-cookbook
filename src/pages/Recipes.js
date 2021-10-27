@@ -1,7 +1,5 @@
 import React from 'react';
-import Footer from './Footer';
 import {Link} from 'react-router-dom';
-import placeholder from '../images/placeholder.jpg';
 
 function Recipes({props}) {
   console.log(props);
@@ -12,11 +10,11 @@ function Recipes({props}) {
           return <>   
             <div className="recipe-wrapper">
               <div className="recipe-image">
-                <img src={placeholder}/>
+                <img src={item && item.image} alt={item.name}/>
               </div>
               <div className="recipe-title">
-                <div className="title-overlay">{item.fields.name.enUS}
-                <Link to={`/recipe/${item.fields.name.enUS}`}>
+                <div className="title-overlay">{item.name}
+                <Link to={`/recipe/${item.id}`}>
                   <button className="view-recipe">View</button>
                 </Link>
                 </div>
