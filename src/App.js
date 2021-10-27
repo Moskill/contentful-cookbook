@@ -21,7 +21,8 @@ function App() {
       .catch(err => console.log(err))
   },[])
 
-  
+  const edit = 'edit';
+
   return (
     <div>
       <nav className="main-nav">
@@ -60,6 +61,10 @@ function App() {
 
         <Route exact path="/AddRecipe" component={AddRecipe}>
           <AddRecipe/>
+        </Route>
+
+        <Route exact path="/EditRecipe" component={AddRecipe}>
+          <AddRecipe param={edit}/>
         </Route>
 
         <Route exact path="/" >

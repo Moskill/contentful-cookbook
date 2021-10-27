@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 
-function AddRecipe() {
+function AddRecipe({edit}) {
+
+  if(edit) {
+    console.log('Hier geht was ab!')
+  }
 
   const [addedRecipe, setAddedRecipe] = useState({
     name: '', 
@@ -15,7 +19,9 @@ function AddRecipe() {
 
   const addRecipeHandler = (e) => {
     e.preventDefault();
-    console.log(e.target[3].value)
+
+    console.log(e);
+
     setAddedRecipe({
       name: e.target[0].value, 
       ingredients: e.target[1].value,
@@ -25,19 +31,26 @@ function AddRecipe() {
       cookingtime: e.target[5].value,
       calories: e.target[6].value
     });
-    console.log(addedRecipe);
   }
 
   useEffect(() => {
     const reqOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: addedRecipe
+      body: JSON.stringify(addedRecipe)
     };
     fetch('http://localhost:8000/post', reqOptions)
       .then(res => res.json())
       .catch(err => console.log(err))
-  }, [])
+  }, [addedRecipe]);
+
+  // useEffect(() => {
+  //   const reqOptions = {
+  //     method: 'POST',
+  //     headers: {'Content-Type': 'image/jpeg'},
+  //     body: JSON.stringify(addedRecipe.image)
+  //   };
+  // })
 
   return (
     <>
