@@ -7,6 +7,7 @@ import Recipe from './pages/Recipe';
 import Home from './pages/Home';
 import About from './pages/About';
 import Footer from './pages/Footer';
+import AddRecipe from './pages/AddRecipe';
 import './App.css';
 
 function App() {
@@ -14,9 +15,9 @@ function App() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    fetch('./contentful-mockdata.json')
+    fetch('http://localhost:8000/recipes')
       .then(res => res.json())
-      .then(data => setRecipes(data.entries))
+      .then(data => setRecipes(data))
       .catch(err => console.log(err))
   },[])
 
@@ -39,6 +40,9 @@ function App() {
           <li>
             <NavLink to="/about">About Us</NavLink>
           </li>
+          <li>
+            <NavLink to="/AddRecipe">Add Recipe</NavLink>
+          </li>
         </ul>
       </nav>
       <Switch>
@@ -52,6 +56,10 @@ function App() {
 
         <Route exact path="/about" component={About}>
           <About/>
+        </Route>
+
+        <Route exact path="/AddRecipe" component={AddRecipe}>
+          <AddRecipe/>
         </Route>
 
         <Route exact path="/" >

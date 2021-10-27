@@ -1,9 +1,7 @@
 import React from "react";
 import "../App.css";
-import { useHistory } from "react-router-dom";
 
 function Home(props) {
-	let history = useHistory();
 
 	return (
 		<div className="home-container">
