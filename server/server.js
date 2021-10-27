@@ -30,6 +30,28 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage}).single('file');
 
+app.post('/upload', (req, res) => {
+  upload(req, res, (err) => {
+    if(err) {
+      console.log('Kackfehler!')
+      return res.status(500).json(err)
+    }
+    // console.log(req.file)
+    // fs.readFile(__DIR__ + req.file.originalname, (err, content) => {
+    //   if(err) {
+    //     res.writeHead(400, {'Content-Type': 'text/html'})
+    //     console.log(err)
+    //     res.send('No such image')
+    //   } else {
+    //     res.writeHead(200, {'Content-Type': 'image/jpg'});
+    //     res.end(content)
+    //   }
+    // })
+    // return res.status(200).send(req.file)
+    res.send('Hallo')
+  })
+});
+
 app.get('/', (req, res) => {
   console.log('Dies ist die root route');
 })
@@ -46,18 +68,18 @@ app.get('/recipes/:recipe', (req, res) => {
       .catch(err => res.sendStatus(500));
 });
 
-let recipeCounter = '';
+// let recipeCounter = '';
 
-const getRowCount = async () => {
-  const rowCount = await pool.query(`SELECT COUNT(id) FROM recipes`)
-  .then(res => console.log('Promised: ', res.rows[0].count))
-  .then(recipeCounter = res.rows[0].count)
-}
+// const getRowCount = async () => {
+//   const rowCount = await pool.query(`SELECT COUNT(id) FROM recipes`)
+//   .then(res => console.log('Promised: ', res.rows[0].count))
+//   .then(recipeCounter = res.rows[0].count)
+// }
 
 // console.log(recipeCounter, 'fsdafnpskdjfhbipsdfbsj');
 
 app.post('/post', (req, res) => {
-  console.log(getRowCount(), 'Promise');
+  // console.log(getRowCount(), 'Promise');
   const id  = 15;
   const image  = 'http://skeel.de/img/flammkuchen.jpg';
   const { name, ingredients, steps, difficult, cookingtime, calories }  = req.body;

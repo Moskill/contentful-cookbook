@@ -20,12 +20,10 @@ function AddRecipe({edit}) {
   const addRecipeHandler = (e) => {
     e.preventDefault();
 
-    console.log(e);
-
     setAddedRecipe({
       name: e.target[0].value, 
       ingredients: e.target[1].value,
-      image: e.target[2].value,
+      image: e.target[2].files[0].name,
       steps: e.target[3].value,
       difficult: e.target[4].value,
       cookingtime: e.target[5].value,
@@ -44,13 +42,16 @@ function AddRecipe({edit}) {
       .catch(err => console.log(err))
   }, [addedRecipe]);
 
-  // useEffect(() => {
-  //   const reqOptions = {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'image/jpeg'},
-  //     body: JSON.stringify(addedRecipe.image)
-  //   };
-  // })
+  useEffect(() => {
+    const reqOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'image/jpeg'},
+      body: JSON.stringify(addedRecipe.image)
+    };
+    fetch('http://localhost:8000/upload', reqOptions)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }, [addedRecipe])
 
   return (
     <>
