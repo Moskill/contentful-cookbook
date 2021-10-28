@@ -7,7 +7,25 @@ import path from 'path';
 const {Pool} = pg;
 const __DIR__ = path.resolve();
 const app = express();
-app.use(cors());
+
+const corsOpts = {
+  origin: '*',
+
+  methods: [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE'
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+  ],
+};
+
+app.use(cors(corsOpts));
+
 const pool = new Pool({
   user: 'jyepzeky', 
   host: 'fanny.db.elephantsql.com', 
@@ -18,39 +36,39 @@ const pool = new Pool({
 
 app.use(express.json());
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'upload');
-    console.log('Nodemon funzt');
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname)
-  }
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'upload');
+//     console.log('Nodemon funzt');
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname)
+//   }
+// });
 
-const upload = multer({storage}).single('file');
+// const upload = multer({storage}).single('file');
 
-app.post('/upload', (req, res) => {
-  upload(req, res, (err) => {
-    if(err) {
-      console.log('Kackfehler!')
-      return res.status(500).json(err)
-    }
-    // console.log(req.file)
-    // fs.readFile(__DIR__ + req.file.originalname, (err, content) => {
-    //   if(err) {
-    //     res.writeHead(400, {'Content-Type': 'text/html'})
-    //     console.log(err)
-    //     res.send('No such image')
-    //   } else {
-    //     res.writeHead(200, {'Content-Type': 'image/jpg'});
-    //     res.end(content)
-    //   }
-    // })
-    // return res.status(200).send(req.file)
-    res.send('Hallo')
-  })
-});
+// app.post('/upload', (req, res) => {
+//   upload(req, res, (err) => {
+//     if(err) {
+//       console.log('Kackfehler!')
+//       return res.status(500).json(err)
+//     }
+//     // console.log(req.file)
+//     fs.readFile(__DIR__ + req.file.originalname, (err, content) => {
+//       if(err) {
+//         res.writeHead(400, {'Content-Type': 'text/html'})
+//         console.log(err)
+//         res.send('No such image')
+//       } else {
+//         res.writeHead(200, {'Content-Type': 'image/jpg'});
+//         res.end(content)
+//       }
+//     })
+//     return res.status(200).send(req.file)
+//     res.send('Hallo')
+//   })
+// });
 
 app.get('/', (req, res) => {
   console.log('Dies ist die root route');
@@ -58,8 +76,8 @@ app.get('/', (req, res) => {
 
 app.get('/recipes', (req, res) => {
   pool.query('SELECT * FROM recipes ORDER BY id;')
-  .then(data => res.json(data.rows))
-  .catch(err => res.sendStatus(500));
+      .then(data => res.json(data.rows))
+      .catch(err => res.sendStatus(500));
 });
 
 app.get('/recipes/:recipe', (req, res) => {
@@ -68,21 +86,12 @@ app.get('/recipes/:recipe', (req, res) => {
       .catch(err => res.sendStatus(500));
 });
 
-// let recipeCounter = '';
-
-// const getRowCount = async () => {
-//   const rowCount = await pool.query(`SELECT COUNT(id) FROM recipes`)
-//   .then(res => console.log('Promised: ', res.rows[0].count))
-//   .then(recipeCounter = res.rows[0].count)
-// }
-
-// console.log(recipeCounter, 'fsdafnpskdjfhbipsdfbsj');
-
 app.post('/post', (req, res) => {
-  // console.log(getRowCount(), 'Promise');
-  const id  = 15;
+  if(req.body.name === '') {
+    return;
+  }
   const image  = 'http://skeel.de/img/flammkuchen.jpg';
-  const { name, ingredients, steps, difficult, cookingtime, calories }  = req.body;
+  const { id, name, ingredients, steps, difficult, cookingtime, calories }  = req.body;
   pool.query(`INSERT INTO recipes (id, name, ingredients, image, steps, difficult, cookingtime, calories) 
               VALUES($1, $2, $3, $4, $5, $6, $7, $8)`, 
               [id, name, ingredients, image, steps, difficult, cookingtime, calories])
@@ -92,10 +101,21 @@ app.post('/post', (req, res) => {
 
 app.delete('/delete/:id', (req, res) => {
   const id = req.params.id;
+  // console.log(`Server responded with ${req.params.id}`);
   pool.query(`DELETE FROM recipes WHERE id = $1`, [id])
-      .then(res.send(200)).json(data)
+      .then(data => res.sendStatus(200).json(data))
       .catch(console.log('Läuft nicht!'))
 });
+
+app.put('/edit/:id', (req, res) => {
+  console.log(req.body, 'Z. 105')
+  const id = req.params.id;
+  const { name, ingredients, steps, difficult, cookingtime, calories }  = req.body;
+  pool.query(`UPDATE recipes SET name = $1, ingredients = $2, steps = $3, difficult = $4, cookingtime = $5, calories = $6 WHERE id = $7` , 
+             [name, ingredients, steps, difficult, cookingtime, calories, id ])
+      .then(data => res.sendStatus(200).json(data))
+      .catch(console.log('Läuft nicht!'))
+})
 
 app.listen(8000, () => {
   console.log('Server is running on port 8000');

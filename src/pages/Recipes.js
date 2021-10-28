@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 function Recipes({props}) {
-  console.log(props);
   return (
     <>
       <div className="recipe-container">

@@ -1,9 +1,11 @@
 import React from 'react'
 import {useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import '../App.css';
 
 
 function Recipe({props}) {
+  console.log(props)
   let {recipe} = useParams();
 
   const wantedRecipe = props.find(item => item.id == recipe);
@@ -17,6 +19,9 @@ function Recipe({props}) {
           <div className="recipe-detail-body">
             <div className="recipe-detail-image">
               <img src={wantedRecipe.image} alt={wantedRecipe.name}/>
+              <Link to={`/editrecipe/${wantedRecipe.id}`}>
+                <div className="edit-btn">Edit recipe</div>
+              </Link>
             </div>
             <div className="recipe-detail-info">
               <p><label className="recipe-info-label">Calories</label>{wantedRecipe.calories}</p>
