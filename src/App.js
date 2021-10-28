@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Footer from './pages/Footer';
 import AddRecipe from './pages/AddRecipe';
+import EditDeleteRecipe from './pages/EditDeleteRecipe';
 import './App.css';
 
 function App() {
@@ -20,8 +21,6 @@ function App() {
       .then(data => setRecipes(data))
       .catch(err => console.log(err))
   },[])
-
-  const edit = 'edit';
 
   return (
     <div>
@@ -39,10 +38,13 @@ function App() {
             <NavLink to="/recipes" >All Recipes</NavLink>
           </li>
           <li>
-            <NavLink to="/about">About Us</NavLink>
+            <NavLink to="/addrecipe">Add Recipe</NavLink>
           </li>
           <li>
-            <NavLink to="/AddRecipe">Add Recipe</NavLink>
+            <NavLink to="/editdelete">Edit Recipe</NavLink>
+          </li>
+          <li>
+            <NavLink to="/about">About Us</NavLink>
           </li>
         </ul>
       </nav>
@@ -59,12 +61,12 @@ function App() {
           <About/>
         </Route>
 
-        <Route exact path="/AddRecipe" component={AddRecipe}>
-          <AddRecipe/>
+        <Route exact path="/addrecipe" component={AddRecipe}>
+          <AddRecipe length={recipes.length}/>
         </Route>
 
-        <Route exact path="/EditRecipe" component={AddRecipe}>
-          <AddRecipe param={edit}/>
+        <Route exact path="/editdelete" component={EditDeleteRecipe}>
+          <EditDeleteRecipe props={recipes} />
         </Route>
 
         <Route exact path="/" >
