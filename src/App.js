@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FaBookDead } from 'react-icons/fa';
-// import { client } from './client';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import Recipes from './pages/Recipes';
 import Recipe from './pages/Recipe';
