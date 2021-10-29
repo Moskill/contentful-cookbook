@@ -93,7 +93,7 @@ app.post('/post', (req, res) => {
     return;
   }
 
-  const image  = `http://localhost/upload/${req.body.image}`;
+  const image  = `http://localhost:8000/upload/${req.body.image}`;
   const { id, name, ingredients, steps, difficult, cookingtime, calories }  = req.body;
   pool.query(`INSERT INTO recipes (id, name, ingredients, image, steps, difficult, cookingtime, calories) 
               VALUES($1, $2, $3, $4, $5, $6, $7, $8)`, 
