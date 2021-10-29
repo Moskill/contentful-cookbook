@@ -3,6 +3,7 @@ import pg from 'pg';
 import cors from 'cors';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 
 const {Pool} = pg;
 const __DIR__ = path.resolve();
@@ -36,61 +37,63 @@ const pool = new Pool({
 
 app.use(express.json());
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'upload');
-//     console.log('Nodemon funzt');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.originalname)
-//   }
-// });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'upload');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+});
 
-// const upload = multer({storage}).single('file');
+const upload = multer({storage}).single('file');
 
-// app.post('/upload', (req, res) => {
-//   upload(req, res, (err) => {
-//     if(err) {
-//       console.log('Kackfehler!')
-//       return res.status(500).json(err)
-//     }
-//     // console.log(req.file)
-//     fs.readFile(__DIR__ + req.file.originalname, (err, content) => {
-//       if(err) {
-//         res.writeHead(400, {'Content-Type': 'text/html'})
-//         console.log(err)
-//         res.send('No such image')
-//       } else {
-//         res.writeHead(200, {'Content-Type': 'image/jpg'});
-//         res.end(content)
-//       }
-//     })
-//     return res.status(200).send(req.file)
-//     res.send('Hallo')
-//   })
-// });
+// DIe Upload Route - führt direkt in den Zielordner -> (./upload)
+app.post('/upload', (req, res) => {
+  upload(req, res, (err) => {
+    if(err) {
+      return res.status(500).json(err)
+    }
+    fs.readFile(__DIR__ + req.file.originalname, (err, content) => {
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(content)
+    })
+  })
+});
 
+// Die Route um Bilder zu laden
+app.get('/upload/:pic', (req, res) =>{
+  fs.readFile(`upload/${req.params.pic}`,  (err, data) => {
+    res.send(data)
+  });
+});
+
+// Die root-Route ohne richtige Funktion
 app.get('/', (req, res) => {
   console.log('Dies ist die root route');
 })
 
+// Die Route, über die alle Recipes geladen werden
 app.get('/recipes', (req, res) => {
   pool.query('SELECT * FROM recipes ORDER BY id;')
       .then(data => res.json(data.rows))
       .catch(err => res.sendStatus(500));
 });
 
+// Route um ein einzelnes Recipe an Hand der ID zu laden
 app.get('/recipes/:recipe', (req, res) => {
   pool.query('SELECT * FROM recipes WHERE id = $1;', [req.params.recipe])
       .then(data => res.json(data.rows))
       .catch(err => res.sendStatus(500));
 });
 
+// Die Post-Route
 app.post('/post', (req, res) => {
   if(req.body.name === '') {
     return;
   }
-  const image  = 'http://skeel.de/img/flammkuchen.jpg';
+
+  const image  = `http://localhost/upload/${req.body.image}`;
   const { id, name, ingredients, steps, difficult, cookingtime, calories }  = req.body;
   pool.query(`INSERT INTO recipes (id, name, ingredients, image, steps, difficult, cookingtime, calories) 
               VALUES($1, $2, $3, $4, $5, $6, $7, $8)`, 
@@ -99,14 +102,15 @@ app.post('/post', (req, res) => {
       .catch(err => res.sendStatus(404))
 });
 
+// Die Route zum Löschen von Recipes
 app.delete('/delete/:id', (req, res) => {
   const id = req.params.id;
-  // console.log(`Server responded with ${req.params.id}`);
   pool.query(`DELETE FROM recipes WHERE id = $1`, [id])
       .then(data => res.sendStatus(200).json(data))
       .catch(console.log('Läuft nicht!'))
 });
 
+// Die Route zum Editieren von Recipes
 app.put('/edit/:id', (req, res) => {
   console.log(req.body, 'Z. 105')
   const id = req.params.id;
@@ -117,6 +121,7 @@ app.put('/edit/:id', (req, res) => {
       .catch(console.log('Läuft nicht!'))
 })
 
+// Der Server auf Port 8000
 app.listen(8000, () => {
   console.log('Server is running on port 8000');
 });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
+import axios from 'axios';
 
 function AddRecipe(props) {
 
@@ -7,6 +8,7 @@ function AddRecipe(props) {
     id: '',
     name: '', 
     ingredients: '', 
+    image: '',
     steps: '',
     difficult: '', 
     cookingtime: '', 
@@ -17,16 +19,26 @@ function AddRecipe(props) {
   // Handle add recipe click
   const addRecipeHandler = (e) => {
     e.preventDefault();
-
+    console.log(e.target[2].files[0].name)
     setAddedRecipe({
       id: props.length + 1,
       name: e.target[0].value, 
       ingredients: e.target[1].value,
+      image: e.target[2].files[0].name,
       steps: e.target[3].value,
       difficult: e.target[4].value,
       cookingtime: e.target[5].value,
       calories: e.target[6].value
     });
+  }
+
+  const addImageHandler = (e) => {
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file)
+    
+    axios.post('http://localhost:8000/upload', data)
+      .then(console.log('Löbbt!'))
   }
 
   // Add recipe
@@ -41,18 +53,6 @@ function AddRecipe(props) {
       .catch(err => console.log(err))
   }, [addedRecipe]);
 
-  // Get recipe image
-  // useEffect(() => {
-  //   const reqOptions = {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'image/jpeg'},
-  //     body: JSON.stringify(addedRecipe.image)
-  //   };
-  //   fetch('http://localhost:8000/upload', reqOptions)
-  //     .then(res => console.log(res))
-  //     .catch(err => console.log(err))
-  // }, [addedRecipe])
-
   return (
     <>
   
@@ -60,25 +60,25 @@ function AddRecipe(props) {
         <div className="recipe-detail-container ">
           {<h1>Add recipe</h1>}
           <form className="container-ml2" onSubmit={addRecipeHandler} >
-            <label for="recipe-name" id="name">Recipe name</label> <br/>
+            <label >Recipe name</label> <br/>
             <input style={{width: 20 + 'rem'}} name="recipe-name" type="text" maxLength="128"  /><br/><br/>
 
-            <label for="recipe-ingredients">Ingredients</label> <br/>
+            <label >Ingredients</label> <br/>
             <textarea style={{width: 40 + 'rem', height: 6 + 'rem'}} name="recipe-ingredients" ></textarea><br/><br/>
 
-            <label for="recipe-file">Image</label><br/>
-            <input type="file" name="recipe-file" /><br/><br/>
+            <label >Image</label><br/>
+            <input type="file" name="recipe-file" onChange={addImageHandler} /><br/><br/>
 
-            <label for="recipe-steps">Cooking Steps</label> <br/>
+            <label >Cooking Steps</label> <br/>
             <textarea style={{width: 40 + 'rem', height: 6 + 'rem'}} name="recipe-steps" ></textarea><br/><br/>
 
-            <label for="recipe-difficult">Difficult</label> <br/>
+            <label >Difficult</label> <br/>
             <input style={{width: 20 + 'rem'}} name="recipe-difficult" type="text" /><br/><br/>
 
-            <label for="recipe-time">Cooking time</label> <br/>
+            <label >Cooking time</label> <br/>
             <input style={{width: 20 + 'rem'}} name="recipe-time" type="text" /><br/><br/>
 
-            <label for="recipe-kcal">Calories</label> <br/>
+            <label >Calories</label> <br/>
             <input style={{width: 20 + 'rem'}} name="recipe-kcal" type="text" /><br/><br/>
 
             <input type="submit"></input>
@@ -86,7 +86,6 @@ function AddRecipe(props) {
           </form>
         </div>
       </div>
-     
     </>
   )
 }
